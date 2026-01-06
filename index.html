@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Spec-Kit In Action - Hướng dẫn cho người mới</title>
+  <meta name="description" content="Tài liệu hướng dẫn sử dụng Spec-Kit cho người mới bắt đầu - Phương pháp Spec-Driven Development">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="Spec-Kit, Spec-Driven Development, AI Coding, Claude Code, GitHub, Vietnamese">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+
+  <!-- Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+
+  <!-- Custom styles -->
+  <style>
+    :root {
+      --theme-color: #10b981;
+      --sidebar-width: 300px;
+      --sidebar-nav-link-color: #374151;
+      --sidebar-nav-link-color--hover: #10b981;
+      --sidebar-nav-link-color--active: #10b981;
+      --sidebar-nav-link-font-weight--active: 600;
+      --sidebar-nav-link-background-color--active: #d1fae5;
+      --sidebar-background: #fafafa;
+      --base-font-size: 16px;
+      --cover-background-color: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+    }
+
+    /* Vietnamese font support */
+    body {
+      font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+
+    /* Sidebar improvements */
+    .sidebar {
+      background: #fafafa !important;
+    }
+
+    .sidebar-nav a {
+      color: #374151 !important;
+      font-weight: 500;
+    }
+
+    .sidebar-nav a:hover {
+      color: #10b981 !important;
+    }
+
+    .sidebar-nav li.active > a {
+      color: #10b981 !important;
+      font-weight: 600 !important;
+      background: #d1fae5 !important;
+      border-left: 3px solid #10b981 !important;
+      padding-left: 12px !important;
+      border-radius: 0 8px 8px 0 !important;
+    }
+
+    .sidebar-nav > ul > li > a {
+      font-weight: 600 !important;
+      color: #1f2937 !important;
+    }
+
+    /* App name in sidebar */
+    .app-name-link {
+      color: #10b981 !important;
+      font-weight: 700 !important;
+    }
+
+    /* Cover page styling */
+    .cover {
+      background: linear-gradient(135deg, #064e3b 0%, #10b981 50%, #06b6d4 100%) !important;
+    }
+
+    .cover h1 {
+      font-size: 2.8rem !important;
+    }
+
+    /* Chapter cards */
+    .chapter-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .chapter-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    .chapter-card.getting-started { border-top: 4px solid #10b981; }
+    .chapter-card.concepts { border-top: 4px solid #06b6d4; }
+    .chapter-card.examples { border-top: 4px solid #f59e0b; }
+    .chapter-card.best-practices { border-top: 4px solid #8b5cf6; }
+
+    /* Command badges */
+    .command-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin: 2px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .cmd-constitution { background: #dcfce7; color: #166534; }
+    .cmd-specify { background: #cffafe; color: #0e7490; }
+    .cmd-plan { background: #fef3c7; color: #92400e; }
+    .cmd-tasks { background: #ede9fe; color: #5b21b6; }
+    .cmd-implement { background: #fee2e2; color: #991b1b; }
+
+    /* Code block improvements */
+    .markdown-section pre {
+      border-radius: 12px;
+      padding: 20px;
+      background: #1f2937 !important;
+    }
+
+    .markdown-section pre code {
+      color: #e5e7eb !important;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .markdown-section code {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .markdown-section pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    /* Table improvements */
+    .markdown-section table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .markdown-section table th {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .markdown-section table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .markdown-section table tr:hover {
+      background: #f8fafc;
+    }
+
+    /* Alert boxes */
+    .tip, .warn, .attention, .info {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    .tip { background: #dcfce7; border-left: 4px solid #22c55e; }
+    .warn { background: #fef3c7; border-left: 4px solid #f59e0b; }
+    .attention { background: #fee2e2; border-left: 4px solid #ef4444; }
+    .info { background: #d1fae5; border-left: 4px solid #10b981; }
+
+    /* Quote styling */
+    .markdown-section blockquote {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-left: 4px solid #10b981;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-style: italic;
+    }
+
+    .markdown-section blockquote p {
+      margin: 0;
+    }
+
+    /* Quick links */
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: #d1fae5;
+      border-radius: 25px;
+      text-decoration: none;
+      color: #065f46;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .quick-links a:hover {
+      background: #10b981;
+      color: white;
+    }
+
+    /* Diagram boxes */
+    .diagram-box {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    /* Workflow steps */
+    .workflow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      margin: 12px 0;
+      background: #f8fafc;
+      border-radius: 12px;
+      border-left: 4px solid #10b981;
+    }
+
+    .workflow-step .step-number {
+      background: #10b981;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    /* Mobile improvements */
+    @media (max-width: 768px) {
+      :root {
+        --sidebar-width: 260px;
+      }
+
+      .chapter-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .markdown-section > * {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Try it yourself box */
+    .try-it {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .try-it h4 {
+      color: #92400e;
+      margin-top: 0;
+    }
+
+    /* Cheatsheet box */
+    .cheatsheet {
+      background: #1f2937;
+      color: #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+    }
+
+    .cheatsheet h4 {
+      color: #10b981;
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="text-align: center; padding: 100px 20px;">
+      <div style="font-size: 60px; margin-bottom: 20px;">📋</div>
+      <h2>Đang tải Spec-Kit Documentation...</h2>
+      <p style="color: #64748b;">Vui lòng đợi trong giây lát</p>
+    </div>
+  </div>
+
+  <script>
+    window.$docsify = {
+      name: '📋 Spec-Kit In Action',
+      nameLink: '#/',
+      repo: 'https://github.com/github/spec-kit',
+
+      // Load sidebar
+      loadSidebar: true,
+
+      // Cover page
+      coverpage: true,
+      onlyCover: false,
+
+      // Auto header
+      autoHeader: true,
+
+      // Sub max level for sidebar
+      subMaxLevel: 2,
+
+      // Search plugin
+      search: {
+        placeholder: 'Tìm kiếm...',
+        noData: 'Không tìm thấy kết quả!',
+        depth: 4,
+      },
+
+      // Auto scroll to top
+      auto2top: true,
+
+      // Max level in TOC
+      maxLevel: 4,
+
+      // Theme color
+      themeColor: '#10b981',
+
+      // Tabs plugin
+      tabs: {
+        persist: true,
+        sync: true,
+        theme: 'classic',
+      },
+
+      // Pagination
+      pagination: {
+        previousText: '← Chương trước',
+        nextText: 'Chương tiếp →',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+
+      // Copy code
+      copyCode: {
+        buttonText: 'Sao chép',
+        errorText: 'Lỗi!',
+        successText: 'Đã sao chép!'
+      },
+
+      // Format updated
+      formatUpdated: '{DD}/{MM}/{YYYY}',
+
+      // Markdown config
+      markdown: {
+        smartypants: true,
+      },
+
+      // Plugins config
+      plugins: [
+        function(hook, vm) {
+          hook.beforeEach(function(content) {
+            return content + '\n\n---\n\n<p style="color: #94a3b8; font-size: 0.85rem;">Spec-Kit In Action | Tài liệu cho người mới | 2025</p>';
+          });
+        }
+      ]
+    }
+  </script>
+
+  <!-- Docsify core -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+
+  <!-- Syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+
+  <!-- Emoji plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/emoji.min.js"></script>
+
+  <!-- Zoom image -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+</body>
+</html>
