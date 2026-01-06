@@ -4,6 +4,8 @@
 
 <small>📚 Tài liệu được custom từ kiến thức cá nhân và Opus 4.5</small>
 
+<small>💡 Khi anh em dev yêu thích viết kĩ càng spec và cập nhật liên tục spec thì ai được hưởng lợi nhiều nhất nhỉ ^^</small>
+
 **Spec-Driven Development** - Phương pháp phát triển phần mềm lấy specification làm trung tâm, không phải "vibe coding".
 
 - 🎯 Định nghĩa rõ ràng trước khi code
